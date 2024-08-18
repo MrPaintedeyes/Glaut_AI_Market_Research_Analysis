@@ -10,8 +10,8 @@ file_path = r"C:\Users\l440\Downloads\sample_dataset.csv"
 df = pd.read_csv(file_path)
 
 # Split the data based on the Voice variable
-group_0 = df[df['VOICE'] == 0]['# themes / respondents']
-group_1 = df[df['VOICE'] == 1]['# themes / respondents']
+group_0 = df[df['VOICE'] == 0]['# themes / respondent']
+group_1 = df[df['VOICE'] == 1]['# themes / respondent']
 
 # Check for normality using Shapiro-Wilk test
 shapiro_0 = stats.shapiro(group_0.dropna())
@@ -52,7 +52,7 @@ positive_mannwhitney_test = mannwhitney_test.pvalue < 0.05
 
 # Plot the data
 plt.figure(figsize=(10, 6))
-sns.boxplot(x='VOICE', y='# themes / respondents', data=df)
+sns.boxplot(x='VOICE', y='# themes / respondent', data=df)
 plt.title('Number of themes per survey conditioned by the use of Voice')
 plt.show()
 
