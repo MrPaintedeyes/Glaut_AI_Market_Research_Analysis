@@ -65,3 +65,8 @@ else:
 # Additional Comments
 if not (normal_0 and normal_1):
     print("One or both groups are not normally distributed.")
+
+if positive_t_test is True:
+  print("The difference in means for the variable "Number of Themes per survey" considering the two levels of the variable VOICE is statistically significant")
+else:
+  print("There is not a statistically significant difference between the means of the variable "Number of Themes per survey" considering the two levels of the variable VOICE")
