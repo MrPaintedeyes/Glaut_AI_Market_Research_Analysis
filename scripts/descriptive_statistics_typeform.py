@@ -1,10 +1,10 @@
 import pandas as pd
 
 # Load your dataset
-data = pd.read_csv('path/to/your/dataset.csv')
+data = pd.read_csv('user_file_path/synthetic_dataset.csv')
 
 # Condition the dataset on the value "Typeform" in the column 'methodology'
-conditioned_data = data[data['methodology'] == 'Typeform']
+conditioned_data = data[data['Methodology'] == 'Typeform']
 
 # Define a function to compute descriptive statistics
 def compute_descriptive_stats(df, columns):
