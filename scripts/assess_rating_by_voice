@@ -46,6 +46,10 @@ else:
     mannwhitney_test = stats.mannwhitneyu(group_0.dropna(), group_1.dropna())
     print(f"Mann-Whitney U test: U-statistic={mannwhitney_test.statistic}, p-value={mannwhitney_test.pvalue}")
 
+# Determine alternative hypothesis acceptance
+positive_t_test = t_test.pvalue < 0.05
+positive_mannwhitney_test = mannwhitney_test.pvalue < 0.05
+
 # Plot the data
 plt.figure(figsize=(10, 6))
 sns.boxplot(x='VOICE', y='RATING', data=df)
