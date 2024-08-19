@@ -37,18 +37,23 @@ if normal_0 and normal_1:
         # Perform t-test for independent samples (equal variances assumed)
         t_test = stats.ttest_ind(group_0.dropna(), group_1.dropna(), equal_var=True)
         print(f"Independent t-test: t-statistic={t_test.statistic}, p-value={t_test.pvalue}")
+        positive_t_test = t_test.pvalue < 0.05
     else:
         # Perform Welch's t-test (unequal variances assumed)
         t_test = stats.ttest_ind(group_0.dropna(), group_1.dropna(), equal_var=False)
         print(f"Welch's t-test: t-statistic={t_test.statistic}, p-value={t_test.pvalue}")
+        positive_t_test = t_test.pvalue < 0.05
 else:
     # Perform Mann-Whitney U test for non-normal distributions
     mannwhitney_test = stats.mannwhitneyu(group_0.dropna(), group_1.dropna())
     print(f"Mann-Whitney U test: U-statistic={mannwhitney_test.statistic}, p-value={mannwhitney_test.pvalue}")
+    positive_mannwhitney_test = mannwhitney_test.pvalue < 0.05
 
 # Determine alternative hypothesis acceptance
-positive_t_test = t_test.pvalue < 0.05
-positive_mannwhitney_test = mannwhitney_test.pvalue < 0.05
+if 't_test' in locals():
+    positive_t_test = t_test.pvalue < 0.05
+if 'mannwhitney_test' in locals():
+    positive_mannwhitney_test = mannwhitney_test.pvalue < 0.05
 
 # Plot the data
 plt.figure(figsize=(10, 6))
