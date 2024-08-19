@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # Load your dataset
-data = pd.read_csv(r'C:\Users\l440\Downloads\Aligned_Glaut_and_Typeform_data.csv')
+data = pd.read_csv(r'C:\author_file_path\original_dataset.csv')
 
 # Function to generate a synthetic dataset preserving frequency distributions
 def generate_synthetic_dataset(original_data, n_samples=None):
@@ -16,6 +16,6 @@ def generate_synthetic_dataset(original_data, n_samples=None):
 synthetic_data = generate_synthetic_dataset(data)
 
 # Save the synthetic dataset
-synthetic_data.to_csv(r'C:/Users/l440/Downloads/synthetic_dataset.csv', index=False)
+synthetic_data.to_csv(r'user_file_path/synthetic_dataset.csv', index=False)
 
 print("Synthetic dataset generated successfully!")
