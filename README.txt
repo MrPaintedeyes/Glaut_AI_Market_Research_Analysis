@@ -36,6 +36,5 @@ Glaut_AI_Market_Research_Analysis/
 ├── docs/
 │ └── README.txt
 ├── requirements.txt
-├── .gitignore
 ├── LICENSE.txt
 └── README.txt
