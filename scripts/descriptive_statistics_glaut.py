@@ -4,7 +4,7 @@ import pandas as pd
 data = pd.read_csv('user_file_path/synthetic_dataset.csv')
 
 # Condition the dataset on the value "Glaut" in the column 'methodology'
-conditioned_data = data[data['methodology'] == 'Glaut']
+conditioned_data = data[data['Methodology'] == 'Glaut']
 
 # Define a function to compute descriptive statistics
 def compute_descriptive_stats(df, columns):
