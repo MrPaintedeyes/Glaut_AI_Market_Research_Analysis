@@ -23,11 +23,16 @@ Glaut_AI_Market_Research_Analysis/
 ├── dataset/
 │ └── README.txt
 ├── scripts/
-│ ├── dataset_descriptive_statistics.py
-│ ├── assess_means_themes_voice.py
-│ ├── assess_means_themes_followup.py
-│ ├── assess_means_user_rating_voice.py
-│ ├── assess_means_user_rating_followup.py
+│ ├── descriptive_statistics_glaut.py
+│ ├── descriptive_statistics_typeform.py
+│ ├── assess_means_themes_by_voice.py
+│ ├── assess_means_themes_by_followup.py
+│ ├── assess_means_words_by_voice.py
+│ ├── assess_means_rating_by_voice.py
+│ ├── assess_means_rating_by_followup.py
+│ ├── generate_synthetic_dataset.py
+│ ├── main.py
+│ ├── README.txt
 ├── docs/
 │ └── README.txt
 ├── requirements.txt
