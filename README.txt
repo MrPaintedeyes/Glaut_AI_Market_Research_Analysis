@@ -9,7 +9,7 @@ The analyses include boxplot visualizations for better understanding.
 - Descriptive Statistics: modules for performing descriptive statistics on our dataset and ensure samples comparability and equivalence.
 - Statistical Analysis and Visualization: modules for performing statistical hypothesis testing and data visualization.
 - Dataset: please note that the actual datasets used in this research are not included in the repository due to privacy and confidentiality agreements. 
-  However, sample data are provided for demonstration purposes. Download data on your local machine and change the file_path variable accordingly.
+  However, synthetic data are provided for demonstration purposes. Download data on your local machine and change the file_path variable accordingly.
 - Docs: redirect link to the research paper where we show our findings.
 
 ## Contributions
