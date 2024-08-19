@@ -20,8 +20,9 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ## Repository Structure
 Glaut_AI_Market_Research_Analysis/
-├── dataset/
+├── data/
 │ └── README.txt
+│ ├── synthetic_dataset.csv
 ├── scripts/
 │ ├── descriptive_statistics_glaut.py
 │ ├── descriptive_statistics_typeform.py
@@ -32,7 +33,7 @@ Glaut_AI_Market_Research_Analysis/
 │ ├── assess_means_rating_by_followup.py
 │ ├── generate_synthetic_dataset.py
 │ ├── main.py
-│ ├── README.txt
+│ ├── research_paper_link
 ├── docs/
 │ └── README.txt
 ├── requirements.txt
