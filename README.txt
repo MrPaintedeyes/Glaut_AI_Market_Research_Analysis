@@ -33,9 +33,8 @@ Glaut_AI_Market_Research_Analysis/
 │ ├── assess_means_rating_by_followup.py
 │ ├── generate_synthetic_dataset.py
 │ ├── main.py
-│ ├── research_paper_link
 ├── docs/
-│ └── README.txt
+│ └── research_paper_link
 ├── requirements.txt
 ├── LICENSE.txt
 └── README.txt
