@@ -24,6 +24,9 @@ Assesses the average ratings based on the number of follow-ups. This script exam
 - generate_synthetic_dataset.py
 Generates a synthetic dataset that preserves the frequency distributions of the original dataset. This script can be used for testing or simulating data scenarios.
 
+- quality_score_LLM.py
+Performs quality scores evaluation of surveys answers through the iteration of an adequately-prompted LLM over the dataframe responses.
+
 - main.py
 Serves as the main entry point for running the various analyses. This script might include functionality to call other scripts or to execute a series of predefined tasks.
 
