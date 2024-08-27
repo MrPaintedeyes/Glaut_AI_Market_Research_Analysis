@@ -8,6 +8,7 @@ The analyses include boxplot visualizations for better understanding.
 ## Main Contents
 - Descriptive Statistics: modules for performing descriptive statistics on our dataset and ensure samples comparability and equivalence.
 - Statistical Analysis and Visualization: modules for performing statistical hypothesis testing and data visualization.
+- Thematic Analysis and Quality Scoring: modules for performing thematic analysis and quality scoring of survey responses.
 - Dataset: please note that the actual datasets used in this research are not included in the repository due to privacy and confidentiality agreements. 
   However, synthetic data are provided for demonstration purposes. Download data on your local machine and change the file_path variable accordingly.
 - Docs: redirect link to the research paper where we show our findings.
@@ -31,6 +32,10 @@ Glaut_AI_Market_Research_Analysis/
 │ ├── assess_means_words_by_voice.py
 │ ├── assess_means_rating_by_voice.py
 │ ├── assess_means_rating_by_followup.py
+│ ├── assess_quality_scores_by_voice.py
+│ ├── assess_quality_scores_by_followup.py
+│ ├── thematic_analysis_LLM.py
+│ ├── quality_score_LLM.py
 │ ├── generate_synthetic_dataset.py
 │ ├── main.py
 ├── docs/
