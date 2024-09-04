@@ -23,7 +23,7 @@ def compute_descriptive_stats(df, columns):
     return stats
 
 # Variables of interest
-variables = ['RATING', '# words / respondent', '# themes / respondent', '# total followups / respondent']
+variables = ['RATING', '# words / respondent', '# themes / respondent', '# total followups / respondent', 'comparison_result', 'gibberish_transcript']
 
 # Compute the descriptive statistics
 descriptive_stats = compute_descriptive_stats(conditioned_data, variables)
