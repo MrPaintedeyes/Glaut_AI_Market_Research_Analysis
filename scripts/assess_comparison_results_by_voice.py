@@ -5,7 +5,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Define the file path
-file_path = r"C:\Users\l440\Downloads\final_data (2).csv"
+file_path = r"user_file_path\synthetic_dataset.csv"
 
 # Load the dataset
 df = pd.read_csv(file_path)
