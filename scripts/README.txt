@@ -24,11 +24,17 @@ Assesses the average ratings based on the number of follow-ups. This script exam
 - generate_synthetic_dataset.py
 Generates a synthetic dataset that preserves the frequency distributions of the original dataset. This script can be used for testing or simulating data scenarios.
 
-- quality_score_LLM.py
-Performs quality scores evaluation of surveys answers through the iteration of an adequately-prompted LLM over the dataframe responses.
+- trascripts_quality_comparison_LLM.py
+Performs quality comparison of surveys transcripts through the iteration of an adequately-prompted LLM over the dataframe of responses.
 
-- main.py
-Serves as the main entry point for running the various analyses. This script might include functionality to call other scripts or to execute a series of predefined tasks.
+- gibberish_responses_classification_LLM.py
+Performs responses classification as "gibberish" and "not gibberish" iterating a LLM over the dataframe cells. Plus, label a row as "gibberish" if it contains at least one cell with the value "gibberish".
+
+- assess_comparison_result_by_voice.py
+Assesses the absolute counts of superior and inferior transcripts when stratified with respect to the variable "voice".
+
+- assess_comparison_result_by_followup.py
+Assesses the absolute counts of superior and inferior transcripts when stratified with respect to the variable "followup".
 
 ## Usage
 To run any of these scripts, you need to have Python installed along with the required libraries. Make sure to have your dataset available and adjust any file paths or configurations as necessary.
