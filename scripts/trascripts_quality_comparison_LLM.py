@@ -1,88 +1,15 @@
 import os
 import pandas as pd
 import google.generativeai as genai
-import time
 import logging
-
-# Load the DataFrame 1
-file_path_1 = r"user_file_path\Glaut_transcripts.csv"
-df = pd.read_csv(file_path_1)
-
-def count_words_excluding_interviewer(transcript):
-    """Counts words in a transcript, excluding 'Interviewer:' lines."""
-    words = []
-    counting = False
-    for line in transcript.splitlines():
-        if line.strip().startswith(("Interviewee:", "interviewee:")):
-            counting = True
-        elif line.strip().startswith(("Interviewer:", "interviewer:")):
-            counting = False
-        if counting:
-            words.extend(line.strip().split())
-    return len(words)
-
-# Apply the word count function to calculate word counts for each transcript
-df['word_count'] = df['Glaut transcripts'].apply(count_words_excluding_interviewer)
-
-# Sort by word count while preserving the original order index
-df['original_index'] = df.index
-df = df.sort_values(by='word_count', ascending=True).reset_index(drop=True)
-
-# Assign unique ranks
-df['rank'] = range(1, len(df) + 1)
-
-# Sort back to the original order
-df = df.sort_values(by='original_index').drop(columns=['original_index'])
-
-# Save the DataFrame with the ranks
-output_file_path = r"C:\Users\l440\Downloads\Glaut_transcripts_ranked.csv"
-df.to_csv(output_file_path, index=False)
-
-# Print to check the result
-print(df[['Glaut transcripts', 'word_count', 'rank']])
-
-# Load the DataFrame 2
-file_path_2 = r"user_file_path\Typeform_transcripts.csv"
-df = pd.read_csv(file_path_2)
-
-def count_words_excluding_interviewer(transcript):
-    """Counts words in a transcript, excluding 'Interviewer:' lines."""
-    words = []
-    counting = False
-    for line in transcript.splitlines():
-        if line.strip().startswith(("Interviewee:", "interviewee:")):
-            counting = True
-        elif line.strip().startswith(("Interviewer:", "interviewer:")):
-            counting = False
-        if counting:
-            words.extend(line.strip().split())
-    return len(words)
-
-# Apply the word count function to calculate word counts for each transcript
-df['word_count'] = df['Typeform transcripts'].apply(count_words_excluding_interviewer)
-
-# Sort by word count while preserving the original order index
-df['original_index'] = df.index
-df = df.sort_values(by='word_count', ascending=True).reset_index(drop=True)
-
-# Assign unique ranks
-df['rank'] = range(1, len(df) + 1)
-
-# Sort back to the original order
-df = df.sort_values(by='original_index').drop(columns=['original_index'])
-
-# Save the DataFrame with the ranks
-output_file_path = r"user_file_path\Typeform_transcripts_ranked.csv"
-df.to_csv(output_file_path, index=False)
-
-# Print to check the result
-print(df[['Typeform transcripts', 'word_count', 'rank']])
+import time
+import random  # Import random for swapping
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
 # Configure the Gemini API with the API key
-genai.configure(api_key="YOUR_GEMINI_API_KEY")
+genai.configure(api_key="AIzaSyDTvfEpZvsfpmdktemtcvjN6IMFPGTbZ_E")
 
 # Create the model
 generation_config = {
@@ -99,78 +26,94 @@ model = genai.GenerativeModel(
 )
 
 # Function to start a chat session with the initial prompt
-def start_chat_session():
+def start_chat_session(transcript1, transcript2):
     chat_session = model.start_chat(
         history=[
             {
                 "role": "user",
                 "parts": [
-                    """You are an AI tasked with evaluating survey transcripts based on two key metrics: adequacy of the response with respect to the question's context and depth/richness of the response. 
+                    f"""You are an AI tasked with evaluating survey transcripts based on two three metrics: adequacy of the response with respect to the questions' context and depth of the responses, and the engagement level of the respondent.
 
-    # Selection criteria:
-    1. Adequacy to Context:
-    Which response addresses better the questions?
-    Which response stays more relevant and on-topic?
+# Selection criteria:
+1. Adequacy to Context:
+Which transcript addresses better the questions?
 
-    2. Depth/Richness:
-    Which response provides more detailed and thoughtful insights?
-    Which response shows a deeper understanding or exploration of the topic?
+2. Depth/Richness:
+Which transcript shows a deeper understanding or exploration of the topic?
 
-    # Task:
-    Compare the following two responses to the question: '{column}' and select the better one based on the criteria mentioned above.
+3. Engagement level:
+Which transcript contains the most engaged respondent? Look for enthusiasm, detailed examples, or elaborations.
 
-    # Responses:
-    Response 1: '{response1}'
-    Response 2: '{response2}'
+# Task:
+Compare the following two transcripts and select the better one based on the criteria mentioned above. 
 
-    # Expected Output Format:
-    Please respond with the better response source only in the following format:
-    "Selected: Response 1" or "Selected: Response 2"
+# Responses:
+Transcript 1: '{transcript1}'
+Transcript 2: '{transcript2}'
+
+# Expected Output Format:
+Please respond with the better response source only in the following format:
+"Selected: Transcript 1" or "Selected: Transcript 2"
 """
                 ],
-            },
+            },  
             {
                 "role": "model",
                 "parts": [
-                    "Please provide me with the question, response 1, and response 2 so I can evaluate them and select the better response based on the scoring criteria. \n",
+                    "Please provide me with the Transcript 1 and Transcript 2 so I can evaluate them and select the better transcript based on your evaluation criteria. \n",
                 ],
             },
         ]
     )
     return chat_session
 
-# Function to compare responses and determine the better source with exponential backoff
-def compare_responses(response1, response2, column):
-    prompt = f"""
-    You are an AI tasked with evaluating survey transcripts based on two key metrics: adequacy and meaningfulness with respect to the questions' context and depth/richness of the responses.
+def compare_transcripts(transcript1, transcript2):
+    
+    should_swap = random.choice([True, False])
+    if should_swap:
+        transcript1, transcript2 = transcript2, transcript1
+    
+    prompt = f"""You are an AI tasked with evaluating survey transcripts based on two key metrics: adequacy of the response with respect to the questions' context and depth/richness of the responses, and the engagement level of the respondent.
 
-    # Selection criteria:
-    1. Adequacy to Context:
-    Which response addresses better the questions?
-    Which response stays more relevant and on-topic?
 
-    2. Depth/Richness:
-    Which response provides more detailed and thoughtful insights?
-    Which response shows a deeper understanding or exploration of the topic?
+# Selection criteria:
+1. Adequacy to Context:
+Which transcript addresses better the questions, providing answers that are meaningful with respect to the question context?
+Which transcript contains less non-sensical answers? (Consider non-sensical answers embedding random characters or out-of-context meanings)
+When you consider there is not a better transcript for this criteria, specify that the transcripts draw.
 
-    # Task:
-    Compare the following two responses to the question: '{column}' and select the better one based on the criteria mentioned above.
+2. Depth:
+Which transcript shows a deeper understanding or exploration of the topic?
+Which transcript yelds more singular and distinct piece of informations?
+When you consider there is not a better transcript for this criteria, specify that the transcripts draw.
 
-    # Responses:
-    Response 1: '{response1}'
-    Response 2: '{response2}'
+3. Cheaters:
+Which transcript contains less serial answers? Consider cheating serial answers the set of responses containing the same wording or fundamental meaning for multiple times in a row (for example, cheater transcripts contains multiple sequential answers in the form: "Non saprei", "Niente", "Nessuno")
+Do not penalize transcripts just because they contain one isolated answer in the form: "Nessuno", "Niente", "Non saprei", because it's legitimate to consider that respondent might not have a specific answer for the question. Penalize this behaviour only when it is serial.
+Which transcript contains does not contain serial cheating answers in the above cited form?
+When you consider there is not a better transcript for this criteria, specify that the transcripts draw.
 
-    # Expected Output Format:
-    Please respond with the better response source only in the following format:
-    "Selected: Response 1" or "Selected: Response 2"
-    """
+# Task:
+Compare the following two transcripts and select the better one based on the criteria mentioned above.
+When you consider there is not an overall better transcript with respect to the mentioned criteria, specify that the transcripts draw.
 
-    chat_session = start_chat_session()
+# Responses:
+Transcript 1: '{transcript1}'
+Transcript 2: '{transcript2}'
+
+# Expected Output Format:
+Please respond giving explanation of your choice and transmitting the winner transcript only in the following format:
+"Selected: Transcript 1" if Transcript 1 was better or "Selected: Transcript 2" if Transcript 2 was better.
+If the transcripts draw, trasmit the output in the following format: "Selected: Draw".
+"""
+    
+    chat_session = start_chat_session(transcript1, transcript2)
     user_input = prompt
 
     attempt = 0
     max_attempts = 10
     delay = 3  # initial delay in seconds
+    
 
     while attempt < max_attempts:
         try:
@@ -180,10 +123,12 @@ def compare_responses(response1, response2, column):
             logging.info(f"Model Response: {response_text}")
 
             # Extract the selected source from the model's response
-            if "Selected: Response 1" in response_text:
-                return "1"
-            elif "Selected: Response 2" in response_text:
-                return "0"
+            if "Selected: Transcript 1" in response_text:
+                return "0" if should_swap else "1"
+            elif "Selected: Transcript 2" in response_text:
+                return "1" if should_swap else "0"
+            elif "Selected: Draw":
+                return "draw"
             else:
                 logging.warning(f"Unclear model response: {response_text}")
                 return "Unclear"
@@ -200,74 +145,35 @@ def compare_responses(response1, response2, column):
     logging.error("Maximum retry attempts reached.")
     return "Error"
 
-# Function to compare responses in the two datasets based on the 'rank' column
-def compare_responses_by_rank(df1, df2):
-    # Ensure that both DataFrames have a 'rank' column
-    assert 'rank' in df1.columns and 'rank' in df2.columns, "Both DataFrames must have a 'rank' column for comparison"
-    
-    # Store the original index
-    df1['original_index'] = df1.index
-    df2['original_index'] = df2.index
-    
-    # Sort the DataFrames by 'rank' to align corresponding rows
-    df1_sorted = df1.sort_values(by='rank').reset_index(drop=True)
-    df2_sorted = df2.sort_values(by='rank').reset_index(drop=True)
+# Load dataframes from CSV
+file_path_glaut = r"C:\Users\l440\Downloads\Glaut_transcript_ranked.csv"
+file_path_typeform = r"C:\Users\l440\Downloads\Typeform_transcript_ranked.csv"
 
-    # Check columns in DataFrames
-    response_columns = [col for col in df1_sorted.columns if col not in ['rank', 'comparison_result', 'original_index']]
-    
-    # Create a new column in df1 to store the comparison results
-    df1_sorted['comparison_result'] = None
+df_glaut = pd.read_csv(file_path_glaut)
+df_typeform = pd.read_csv(file_path_typeform)
 
-    for idx in df1_sorted.index:
-        for column in response_columns:
-            response1 = df1_sorted.at[idx, column]
-            response2 = df2_sorted.at[idx, column]
+# Ensure both dataframes have the same structure: "Transcripts", "word_count", "rank"
+if not all(col in df_glaut.columns for col in ["Transcripts", "word_count", "rank"]) or \
+   not all(col in df_typeform.columns for col in ["Transcripts", "word_count", "rank"]):
+    raise ValueError("Both dataframes must contain the columns: 'Transcripts', 'word_count', and 'rank'.")
 
-            better_source = compare_responses(response1, response2, column)
-            df1_sorted.at[idx, 'comparison_result'] = better_source
+# Initialize a new column in the Glaut dataframe to store the comparison results
+df_glaut['Comparison_Result'] = None
 
-            # Sleep to avoid rate limiting
-            time.sleep(3)
+# Iterate over the ranks and compare transcripts
+for rank in df_glaut['rank'].unique():
+    # Get the corresponding transcripts for the current rank from both dataframes
+    transcript1 = df_glaut[df_glaut['rank'] == rank]['Transcripts'].values[0]
+    transcript2 = df_typeform[df_typeform['rank'] == rank]['Transcripts'].values[0]
 
-    # Restore the original index order
-    df1_sorted = df1_sorted.sort_values(by='original_index').drop(columns=['original_index'])
+    # Compare the transcripts using the Gemini LLM
+    result = compare_transcripts(transcript1, transcript2)
 
-    return df1_sorted
+    # Update the comparison result in the Glaut dataframe for the matching rank
+    df_glaut.loc[df_glaut['rank'] == rank, 'Comparison_Result'] = result
 
-# Function to count occurrences of '1' and '0' in the 'comparison_result' column
-def count_comparison_results(file_path):
-    df = pd.read_csv(file_path)
-    if 'comparison_result' not in df.columns:
-        raise KeyError("The DataFrame does not contain a 'comparison_result' column.")
-    
-    result_counts = df['comparison_result'].value_counts()
-    return result_counts
+# Save the updated Glaut dataframe with the comparison results to a CSV
+output_file_path = r"C:\Users\l440\Downloads\Glaut_transcript_with_comparison_results_without_swapping.csv"
+df_glaut.to_csv(output_file_path, index=False)
 
-# Main script execution
-if __name__ == "__main__":
-    # Load the two datasets
-    file_path1 = r"user_file_path\Glaut_transcripts.csv"
-    file_path2 = r"user_file_path\Typeform_transcripts.csv"
-
-    df1 = pd.read_csv(file_path1)
-    df2 = pd.read_csv(file_path2)
-
-    # Print columns to check their names
-    print("Columns in df1:", df1.columns)
-    print("Columns in df2:", df2.columns)
-
-    # Perform the pairwise comparison based on the 'rank' column
-    comparison_results_df = compare_responses_by_rank(df1, df2)
-
-    # Save the comparison results back to the first DataFrame (Glaut_transcripts.csv)
-    output_file_path = r"user_file_path\comparison_results.csv"
-    comparison_results_df.to_csv(output_file_path, index=False)
-
-    # Output the result DataFrame
-    print(comparison_results_df)
-
-    # Count and print occurrences of '1' and '0' in the comparison results
-    result_counts = count_comparison_results(output_file_path)
-    print("Comparison result counts:")
-    print(result_counts)
+print("Comparison complete. Results saved to:", output_file_path)
