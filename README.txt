@@ -26,6 +26,7 @@ Glaut_AI_Market_Research_Analysis/
 │ └── README.txt
 │ ├── synthetic_dataset.csv
 ├── scripts/
+│ └── README.txt
 │ ├── transcripts_quality_comparison_LLM.py
 │ ├── transcripts_gibberish_categorization_LLM.py
 │ ├── descriptive_statistics_glaut.py
