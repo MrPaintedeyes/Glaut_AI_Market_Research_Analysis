@@ -5,7 +5,7 @@ import numpy as np
 import scipy.stats as stats
 
 # Load your dataset
-file_path = r"C:\Users\l440\Downloads\Merged data without responses.csv"
+file_path = user_file_path
 df = pd.read_csv(file_path)
 
 # Clean the column names by removing special characters and spaces
