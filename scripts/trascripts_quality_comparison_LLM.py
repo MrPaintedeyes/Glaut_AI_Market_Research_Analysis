@@ -9,7 +9,7 @@ import random  # Import random for swapping
 logging.basicConfig(level=logging.INFO)
 
 # Configure the Gemini API with the API key
-genai.configure(api_key="AIzaSyDTvfEpZvsfpmdktemtcvjN6IMFPGTbZ_E")
+genai.configure(api_key="YOUR_API_KEY")
 
 # Create the model
 generation_config = {
@@ -146,8 +146,8 @@ If the transcripts draw, trasmit the output in the following format: "Selected: 
     return "Error"
 
 # Load dataframes from CSV
-file_path_glaut = r"C:\Users\l440\Downloads\Glaut_transcript_ranked.csv"
-file_path_typeform = r"C:\Users\l440\Downloads\Typeform_transcript_ranked.csv"
+file_path_glaut = Glaut_transcripts_dataframe_file_path
+file_path_typeform = Typeform_transcripts_dataframe_file_path
 
 df_glaut = pd.read_csv(file_path_glaut)
 df_typeform = pd.read_csv(file_path_typeform)
@@ -173,7 +173,7 @@ for rank in df_glaut['rank'].unique():
     df_glaut.loc[df_glaut['rank'] == rank, 'Comparison_Result'] = result
 
 # Save the updated Glaut dataframe with the comparison results to a CSV
-output_file_path = r"C:\Users\l440\Downloads\Glaut_transcript_with_comparison_results_without_swapping.csv"
+output_file_path = user_output_file_path
 df_glaut.to_csv(output_file_path, index=False)
 
 print("Comparison complete. Results saved to:", output_file_path)
