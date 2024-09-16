@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Load your dataset
-file_path = r"file_path\synthetic_dataset.csv"
+file_path = user_file_path
 df = pd.read_csv(file_path)
 
 # List of continuous dependent variables (these are the variables you're testing with Mann-Whitney U or t-test)
