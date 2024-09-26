@@ -147,14 +147,14 @@ If the transcripts draw, trasmit the output in the following format: "Selected: 
 
 # Load dataframes from CSV
 file_path_glaut = Glaut_transcripts_dataframe_file_path
-file_path_typeform = Typeform_transcripts_dataframe_file_path
+file_path_typeform = Traditional_survey_transcripts_dataframe_file_path
 
 df_glaut = pd.read_csv(file_path_glaut)
-df_typeform = pd.read_csv(file_path_typeform)
+df_traditional_survey = pd.read_csv(file_path_typeform)
 
 # Ensure both dataframes have the same structure: "Transcripts", "word_count", "rank"
 if not all(col in df_glaut.columns for col in ["Transcripts", "word_count", "rank"]) or \
-   not all(col in df_typeform.columns for col in ["Transcripts", "word_count", "rank"]):
+   not all(col in df_traditional_survey.columns for col in ["Transcripts", "word_count", "rank"]):
     raise ValueError("Both dataframes must contain the columns: 'Transcripts', 'word_count', and 'rank'.")
 
 # Initialize a new column in the Glaut dataframe to store the comparison results
@@ -164,7 +164,7 @@ df_glaut['Comparison_Result'] = None
 for rank in df_glaut['rank'].unique():
     # Get the corresponding transcripts for the current rank from both dataframes
     transcript1 = df_glaut[df_glaut['rank'] == rank]['Transcripts'].values[0]
-    transcript2 = df_typeform[df_typeform['rank'] == rank]['Transcripts'].values[0]
+    transcript2 = df_traditional_survey[df_traditional_survey['rank'] == rank]['Transcripts'].values[0]
 
     # Compare the transcripts using the Gemini LLM
     result = compare_transcripts(transcript1, transcript2)
