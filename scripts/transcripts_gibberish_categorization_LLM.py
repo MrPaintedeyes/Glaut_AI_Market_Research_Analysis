@@ -106,7 +106,7 @@ def classify_dataframe(df):
 # Example usage
 if __name__ == "__main__":
     # Load your DataFrame from a CSV file
-    file_path = r"user_file_path\open-text_responses_dataset_[methodology].csv"
+    file_path = r"user_file_path\open-text_responses_dataset_[completion_mode].csv"
     df = pd.read_csv(file_path)
 
     # Process the DataFrame to categorize each response
@@ -137,14 +137,14 @@ def label_rows(df):
 
 if __name__ == "__main__":
     # Load your DataFrame from a CSV file
-    file_path = r"user_file_path\open-text_responses_dataset_[methodology]_labeled.csv"
+    file_path = r"user_file_path\open-text_responses_dataset_[completion_mode]_labeled.csv"
     df = pd.read_csv(file_path)
 
     # Label the rows based on the presence of "gibberish"
     labeled_df = label_rows(df)
 
     # Save the DataFrame with the row labels to a new CSV file
-    output_file_path = r"user_file_path\gibberish_labeled_transcripts_[methodology].csv"
+    output_file_path = r"user_file_path\gibberish_labeled_transcripts_[completion_mode].csv"
     labeled_df.to_csv(output_file_path, index=False)
 
     # Print the DataFrame with the row labels (optional)
