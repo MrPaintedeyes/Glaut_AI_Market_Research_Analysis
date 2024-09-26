@@ -3,8 +3,8 @@ import pandas as pd
 # Load your dataset
 data = pd.read_csv('user_file_path/synthetic_dataset.csv')
 
-# Condition the dataset on the value "Typeform" in the column 'methodology'
-conditioned_data = data[data['Methodology'] == 'Typeform']
+# Condition the dataset on the value "Traditional Survey" in the column 'Completion Mode'
+conditioned_data = data[data['Completion Mode'] == 'Traditional Survey']
 
 # Define a function to compute descriptive statistics
 def compute_descriptive_stats(df, columns):
@@ -23,7 +23,7 @@ def compute_descriptive_stats(df, columns):
     return stats
 
 # Variables of interest
-variables = ['RATING', '# words / respondent', '# themes / respondent', '# total followups / respondent']
+variables = ['RATING', 'Total Words per Respondent', 'Total Themes per Respondent', 'total_num_followups']
 
 # Compute the descriptive statistics
 descriptive_stats = compute_descriptive_stats(conditioned_data, variables)
