@@ -1,9 +1,8 @@
 # Glaut_AI_Market_Research_Analysis
 
-This repository contains modules and scripts used for the analysis of data collected in a market research project utilizing Glaut's AI-native market research software. 
+This repository contains modules and scripts used for the analysis of data collected in a market research project utilizing Glaut's AI-native market research software and a globally known survey builder.
 The project compares the performance of an AI conversational agent with traditional static surveys in extracting qualitative insights at scale.
-This repository contains scripts to assess and visualize whether the means of specific variables are different when conditioned by categorical variables. 
-The analyses include boxplot visualizations for better understanding.
+This repository contains scripts to assess and visualize whether the means of specific variables are different when conditioned by categorical variables. Plus, we present the script used to automatically annotate (and classify) data with categorical levels through an instructed LLM. It is also included a synthetic dataset that resembles the original data distributions. 
 
 ## Main Contents
 - Descriptive Statistics: modules for performing descriptive statistics on our dataset and ensure samples comparability and equivalence.
