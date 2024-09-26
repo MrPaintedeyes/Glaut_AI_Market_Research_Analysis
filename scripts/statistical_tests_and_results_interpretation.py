@@ -30,30 +30,30 @@ chi2_p_value = None
 # Step 1: Loop through each continuous dependent variable
 for variable in continuous_vars:
     group_glaut = df[df['Completion Mode'] == 'Glaut'][variable]
-    group_typeform = df[df['Completion Mode'] == 'Typeform'][variable]
+    group_traditional_survey = df[df['Completion Mode'] == 'Traditional Survey'][variable]
 
     # Step 2: Check normality using the Shapiro-Wilk test
     shapiro_glaut = shapiro(group_glaut)[1]  # Get the p-value
-    shapiro_typeform = shapiro(group_typeform)[1]  # Get the p-value
+    shapiro_traditional survey = shapiro(group_typeform)[1]  # Get the p-value
 
     # Step 3: Check equal variances using Levene's test
-    levene_test = levene(group_glaut, group_typeform)[1]  # Get the p-value
+    levene_test = levene(group_glaut, group_traditional_survey)[1]  # Get the p-value
 
     # Step 4: Decide whether to use parametric (t-test) or non-parametric (Mann-Whitney U) based on normality and equal variance
     print(f"\n--- Results for {variable} ---")
-    print(f"Shapiro-Wilk test p-values: Glaut={shapiro_glaut:.10f}, Typeform={shapiro_typeform:.10f}")
+    print(f"Shapiro-Wilk test p-values: Glaut={shapiro_glaut:.10f}, Traditional Survey={shapiro_traditional_survey:.10f}")
     print(f"Levene's test p-value for equal variances: p={levene_test:.17f}")
 
-    if shapiro_glaut >= 0.05 and shapiro_typeform >= 0.05 and levene_test >= 0.05:
+    if shapiro_glaut >= 0.05 and shapiro_traditional_survey >= 0.05 and levene_test >= 0.05:
         # Parametric: Both normality and equal variances are met, use t-test
         print("Both normality and equal variances met. Proceeding with t-test.")
-        stat, p_value = ttest_ind(group_glaut, group_typeform, equal_var=True)
+        stat, p_value = ttest_ind(group_glaut, group_traditional_survey, equal_var=True)
         p_values_parametric.append(p_value)
         print(f't-test for {variable}: t={stat:.4f}, p={p_value:.17f}')
     else:
         # Non-parametric: Either normality or equal variances not met, use Mann-Whitney U test
         print("Normality or equal variances not met. Proceeding with Mann-Whitney U test.")
-        stat, p_value = mannwhitneyu(group_glaut, group_typeform)
+        stat, p_value = mannwhitneyu(group_glaut, group_traditional_survey)
         p_values_nonparametric.append(p_value)
         print(f'Mann-Whitney U test for {variable}: U={stat:.4f}, p={p_value:.17f}')
 
